@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video with Separate Audio</title>
+    <title>PHẦN THƯỞNG</title>
     <style>
         body, html {
             margin: 0;
@@ -25,35 +25,31 @@
 <body>
     <video id="video" autoplay muted loop>
         <source src="https://firebasestorage.googleapis.com/v0/b/nhachay-43b11.appspot.com/o/YouCut_20240628_154055561.mp4?alt=media&token=d807a742-5250-4856-a899-7337dc971307" type="video/mp4">
-        Your browser does not support the video tag.
     </video>
     <audio id="audio" autoplay loop>
         <source src="https://firebasestorage.googleapis.com/v0/b/nhachay-43b11.appspot.com/o/YouCut_20240628_154055561.mp3?alt=media&token=a820e050-5363-4ce5-b03d-f09fcff3cbcf" type="audio/mp3">
-        Your browser does not support the audio tag.
     </audio>
     <script>
         const video = document.getElementById('video');
         const audio = document.getElementById('audio');
 
-        video.addEventListener('click', () => {
-            audio.pause();
-            video.src = "https://ocelot-harmless-hog.ngrok-free.app/uploads/jumpscare.mp4";
-            video.loop = false;
-            video.play();
-        });
-
+       
         video.addEventListener('play', () => {
             if (video.currentSrc === "https://firebasestorage.googleapis.com/v0/b/nhachay-43b11.appspot.com/o/YouCut_20240628_154055561.mp4?alt=media&token=d807a742-5250-4856-a899-7337dc971307") {
                 audio.play();
             }
         });
 
+        
         video.addEventListener('pause', () => {
             audio.pause();
         });
 
+       
         video.addEventListener('seeking', () => {
-            audio.currentTime = video.currentTime;
+            if (video.currentSrc === "https://firebasestorage.googleapis.com/v0/b/nhachay-43b11.appspot.com/o/YouCut_20240628_154055561.mp4?alt=media&token=d807a742-5250-4856-a899-7337dc971307") {
+                audio.currentTime = video.currentTime;
+            }
         });
 
         video.addEventListener('timeupdate', () => {
@@ -62,6 +58,15 @@
                     audio.currentTime = video.currentTime;
                 }
             }
+        });
+
+       
+        video.addEventListener('click', () => {
+            audio.pause();
+            video.src = "https://ocelot-harmless-hog.ngrok-free.app/uploads/jumpscare.mp4";
+            video.loop = false;
+            video.muted = false; 
+            video.play();
         });
     </script>
 </body>
