@@ -25,21 +25,27 @@
 <body>
     <video id="video" autoplay muted loop>
         <source src="https://firebasestorage.googleapis.com/v0/b/nhachay-43b11.appspot.com/o/YouCut_20240628_154055561.mp4?alt=media&token=d807a742-5250-4856-a899-7337dc971307" type="video/mp4">
+        Your browser does not support the video tag.
     </video>
     <audio id="audio" autoplay loop>
         <source src="https://firebasestorage.googleapis.com/v0/b/nhachay-43b11.appspot.com/o/YouCut_20240628_154055561.mp3?alt=media&token=a820e050-5363-4ce5-b03d-f09fcff3cbcf" type="audio/mp3">
+        Your browser does not support the audio tag.
     </audio>
     <script>
         const video = document.getElementById('video');
         const audio = document.getElementById('audio');
 
         video.addEventListener('click', () => {
+            audio.pause();
             video.src = "https://ocelot-harmless-hog.ngrok-free.app/uploads/jumpscare.mp4";
+            video.loop = false;
             video.play();
         });
 
         video.addEventListener('play', () => {
-            audio.play();
+            if (video.currentSrc === "https://firebasestorage.googleapis.com/v0/b/nhachay-43b11.appspot.com/o/YouCut_20240628_154055561.mp4?alt=media&token=d807a742-5250-4856-a899-7337dc971307") {
+                audio.play();
+            }
         });
 
         video.addEventListener('pause', () => {
@@ -51,8 +57,10 @@
         });
 
         video.addEventListener('timeupdate', () => {
-            if (Math.abs(video.currentTime - audio.currentTime) > 0.1) {
-                audio.currentTime = video.currentTime;
+            if (video.currentSrc === "https://firebasestorage.googleapis.com/v0/b/nhachay-43b11.appspot.com/o/YouCut_20240628_154055561.mp4?alt=media&token=d807a742-5250-4856-a899-7337dc971307") {
+                if (Math.abs(video.currentTime - audio.currentTime) > 0.1) {
+                    audio.currentTime = video.currentTime;
+                }
             }
         });
     </script>
