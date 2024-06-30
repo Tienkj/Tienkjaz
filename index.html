@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚨ĐỪNG💥NHẤN💥VÀO📛</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .button-container {
+            width: 992px; 
+            height: 640px; 
+            position: relative;
+            overflow: hidden; 
+            margin: auto; 
+        }
+        .button {
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1; 
+        }
+        .video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0; 
+        }
+    </style>
+    <script type="text/javascript">
+        function openZaloApp() {
+            var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            var isAndroid = /Android/i.test(userAgent);
+            var isiOS = /iPhone|iPad|iPod/i.test(userAgent);
+            var isDesktop = !isAndroid && !isiOS;
+            var link;
+
+            if (isAndroid) {
+                link = "intent://zalo.me/g/kmcfdg704#Intent;scheme=https;package=com.zing.zalo;end";
+            } else if (isiOS) {
+                link = "zalo://zalo.me/g/fwccrs306";
+            } else if (isDesktop) {
+                link = "https://zalo.me/g/fwccrs306";
+            } else {
+                link = "https://zalo.me/g/fwccrs306";
+            }
+
+            window.location.href = link;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var video = document.querySelector('.video');
+            var audio = document.querySelector('.audio');
+
+            function playMedia() {
+                video.play();
+                audio.play();
+            }
+            
+            playMedia();
+
+            document.querySelector('.button').addEventListener('click', function() {
+                openZaloApp();
+                playMedia();
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="button-container">
+        <button class="button"></button>
+        <video class="video" autoplay loop muted>
+            <source src="https://firebasestorage.googleapis.com/v0/b/nhachay-43b11.appspot.com/o/YouCut_20240628_154055561.mp4?alt=media&token=d807a742-5250-4856-a899-7337dc971307" type="video/mp4">
+        </video>
+        <audio class="audio" autoplay loop preload="auto">
+            <source src="https://firebasestorage.googleapis.com/v0/b/nhachay-43b11.appspot.com/o/YouCut_20240628_154055561.mp3?alt=media&token=a820e050-5363-4ce5-b03d-f09fcff3cbcf" type="audio/mp3">
+        </audio>
+    </div>
+</body>
+</html>
