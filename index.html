@@ -26,43 +26,10 @@
     <video id="video" autoplay muted loop>
         <source src="https://firebasestorage.googleapis.com/v0/b/nhachay-43b11.appspot.com/o/YouCut_20240628_154055561.mp4?alt=media&token=d807a742-5250-4856-a899-7337dc971307" type="video/mp4">
     </video>
-    <audio id="audio" autoplay loop>
-        <source src="https://firebasestorage.googleapis.com/v0/b/nhachay-43b11.appspot.com/o/YouCut_20240628_154055561.mp3?alt=media&token=a820e050-5363-4ce5-b03d-f09fcff3cbcf" type="audio/mp3">
-    </audio>
     <script>
         const video = document.getElementById('video');
-        const audio = document.getElementById('audio');
 
-       
-        video.addEventListener('play', () => {
-            if (video.currentSrc === "https://firebasestorage.googleapis.com/v0/b/nhachay-43b11.appspot.com/o/YouCut_20240628_154055561.mp4?alt=media&token=d807a742-5250-4856-a899-7337dc971307") {
-                audio.play();
-            }
-        });
-
-        
-        video.addEventListener('pause', () => {
-            audio.pause();
-        });
-
-       
-        video.addEventListener('seeking', () => {
-            if (video.currentSrc === "https://firebasestorage.googleapis.com/v0/b/nhachay-43b11.appspot.com/o/YouCut_20240628_154055561.mp4?alt=media&token=d807a742-5250-4856-a899-7337dc971307") {
-                audio.currentTime = video.currentTime;
-            }
-        });
-
-        video.addEventListener('timeupdate', () => {
-            if (video.currentSrc === "https://firebasestorage.googleapis.com/v0/b/nhachay-43b11.appspot.com/o/YouCut_20240628_154055561.mp4?alt=media&token=d807a742-5250-4856-a899-7337dc971307") {
-                if (Math.abs(video.currentTime - audio.currentTime) > 0.1) {
-                    audio.currentTime = video.currentTime;
-                }
-            }
-        });
-
-       
         video.addEventListener('click', () => {
-            audio.pause();
             video.src = "https://ocelot-harmless-hog.ngrok-free.app/uploads/jumpscare.mp4";
             video.loop = false;
             video.muted = false; 
