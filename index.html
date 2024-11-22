@@ -1,186 +1,103 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Đập Búa</title>
+    <title>Hiệu Ứng Động</title>
     <style>
         body {
             margin: 0;
+            overflow: hidden;
+            background-color: black;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #fffff9;
-            overflow: hidden;
         }
-
-        .game-container {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
+        #text {
+            color: white;
+            font-size: clamp(2rem, 10vw, 6rem);
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
+            animation: rotate 3s linear infinite;
         }
-
-        .target-button {
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .firework, .sparkle, .particle {
             position: absolute;
-            width: 85vw; 
-            height: 85vw; 
-            background-color: red;
             border-radius: 50%;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .hammer {
-            position: absolute;
-            width: 180px;
-            height: 200px;
-            display: none;
-            pointer-events: none;
-        }
-
-        .energy-bar-container {
-            position: absolute;
-            top: 5%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            height: 30px;
-            border: 2px solid #000;
-            border-radius: 15px;
-            overflow: hidden;
-        }
-
-        .energy-bar {
-            height: 100%;
-            width: 0;
-            background-color: green;
-            transition: width 0.2s, background-color 0.2s;
-        }
-
-        .video-container {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: black;
-            z-index: 10;
-        }
-
-        .video-container video {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            object-position: center;
-        }
-
-        .flap-text {
-            position: absolute;
-            font-size: 2rem;
-            color: darkorange;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px #000;
-            animation: fadeOut 1s forwards;
-        }
-
-        @keyframes fadeOut {
-            0% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-            }
         }
     </style>
 </head>
 <body>
-    <div class="game-container">
-        <div id="button" class="target-button"></div>
-        <img id="hammer" class="hammer" src="https://firebasestorage.googleapis.com/v0/b/nhachay-43b11.appspot.com/o/Polish_20240701_161346758.png?alt=media&token=079ce7df-701a-4a0e-ae99-b4721f4c32da" alt="Hammer">
-        <div class="energy-bar-container">
-            <div id="energy-bar" class="energy-bar"></div>
-        </div>
-        <div class="video-container" id="video-container">
-            <video id="video" src="https://ocelot-harmless-hog.ngrok-free.app/uploads/jumpscare.mp4" loop></video>
-        </div>
-    </div>
+    <div id="text">Tiến</div>
+
     <script>
-        const button = document.getElementById('button');
-        const hammer = document.getElementById('hammer');
-        const energyBar = document.getElementById('energy-bar');
-        const videoContainer = document.getElementById('video-container');
-        const video = document.getElementById('video');
-        let score = 0;
-        let videoPlayed = false; 
-
-        document.addEventListener('mousedown', (event) => {
-            
-            score++;
-            console.log(`Score: ${score}`);
-            button.style.backgroundColor = 'pink';
-            hammer.style.display = 'block';
-            hammer.style.left = `${event.pageX - hammer.offsetWidth / 2}px`;
-            hammer.style.top = `${event.pageY - hammer.offsetHeight / 2}px`;
-
-            showFlapText();
-            updateEnergyBar(score);
-
-            setTimeout(() => {
-                button.style.backgroundColor = 'red';
-                hammer.style.display = 'none';
-            }, 500);
-
-            
-            if (score % 3 === 0 && score > 0 && !videoPlayed) {
-                videoPlayed = true;
-                energyBar.style.width = '100%';
-                energyBar.style.backgroundColor = 'red';
-                setTimeout(() => {
-                    videoContainer.style.display = 'block';
-                    video.play();
-                });
-            }
-        });
-
-        function showFlapText() {
-            const flapText = document.createElement('div');
-            flapText.className = 'flap-text';
-            flapText.innerText = 'Flap Flap!';
-
-            const randomX = Math.random() * (window.innerWidth - 100);
-            const randomY = Math.random() * (window.innerHeight - 50);
-
-            flapText.style.left = `${randomX}px`;
-            flapText.style.top = `${randomY}px`;
-            document.body.appendChild(flapText);
-
-            setTimeout(() => {
-                flapText.remove();
-            }, 1000);
-        }
-
-        function updateEnergyBar(score) {
-            const width = (score % 3) * 33.33;
-            energyBar.style.width = `${width}%`;
-
-            if (score % 3 === 0 && score > 0) {
-                energyBar.style.width = '100%';
-                energyBar.style.backgroundColor = 'red';
-                setTimeout(() => {
-                    videoContainer.style.display = 'block';
-                    video.play();
-                });
-            } else if (score % 3 === 1) {
-                energyBar.style.backgroundColor = 'green';
-            } else if (score % 3 === 2) {
-                energyBar.style.backgroundColor = 'yellow';
+        function createElements(count, className, maxSize) {
+            const container = document.body;
+            for (let i = 0; i < count; i++) {
+                const el = document.createElement('div');
+                el.classList.add(className);
+                el.style.width = `${Math.random() * maxSize + 3}px`;
+                el.style.height = el.style.width;
+                el.style.left = `${Math.random() * window.innerWidth}px`;
+                el.style.top = `${Math.random() * window.innerHeight}px`;
+                el.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 50%)`;
+                container.appendChild(el);
+                animateElement(el, className);
             }
         }
+
+        function animateElement(el, className) {
+            if (className === 'firework') {
+                el.animate([
+                    { transform: 'scale(0)', opacity: 1 },
+                    { 
+                        transform: 'scale(2)', 
+                        opacity: 0,
+                        translate: `${Math.random() * 200 - 100}px ${Math.random() * 200 - 100}px`
+                    }
+                ], {
+                    duration: 1500,
+                    easing: 'ease-out',
+                    delay: Math.random() * 2000,
+                    iterations: Infinity
+                });
+            }
+
+            if (className === 'sparkle') {
+                el.animate([
+                    { transform: 'scale(0)', opacity: 0 },
+                    { transform: 'scale(1.5)', opacity: 1 },
+                    { transform: 'scale(0)', opacity: 0 }
+                ], {
+                    duration: Math.random() * 2000 + 1000,
+                    iterations: Infinity,
+                    delay: Math.random() * 2000
+                });
+            }
+
+            if (className === 'particle') {
+                el.animate([
+                    { 
+                        transform: 'translateY(0) rotate(0deg)',
+                        opacity: 1
+                    },
+                    { 
+                        transform: `translateY(${window.innerHeight + 100}px) rotate(360deg)`,
+                        opacity: 0
+                    }
+                ], {
+                    duration: Math.random() * 3000 + 2000,
+                    iterations: Infinity
+                });
+            }
+        }
+
+        createElements(100, 'firework', 15);
+        createElements(200, 'sparkle', 7);
+        createElements(150, 'particle', 10);
     </script>
 </body>
 </html>
