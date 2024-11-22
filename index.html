@@ -1,124 +1,103 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng Nhập</title>
+    <title>Hiệu Ứng Động</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
+            overflow: hidden;
+            background-color: black;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f0f2f5;
         }
-        .container {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 400px;
-            padding: 20px;
-            text-align: center;
-        }
-        .login-text {
-            color: #333;
-            margin-bottom: 20px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        input {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #1877f2;
+        #text {
             color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
+            font-size: clamp(2rem, 10vw, 6rem);
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
+            animation: rotate 3s linear infinite;
         }
-        .toggle {
-            margin-top: 15px;
-            color: #1877f2;
-            cursor: pointer;
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
-        #message {
-            color: #333;
-            font-size: 2rem;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: -1;
+        .firework, .sparkle, .particle {
+            position: absolute;
+            border-radius: 50%;
         }
     </style>
 </head>
 <body>
-    <div id="message">KHÔNG CÓ GÌ Ở ĐÂY</div>
-
-    <div class="container" id="authContainer">
-        <h2 class="login-text" id="formTitle">Đăng Nhập</h2>
-        <form id="authForm">
-            <div class="form-group">
-                <input type="text" id="username" placeholder="Tên đăng nhập" required>
-            </div>
-            <div class="form-group">
-                <input type="password" id="password" placeholder="Mật khẩu" required>
-            </div>
-            <div class="form-group" id="emailGroup" style="display:none;">
-                <input type="email" id="email" placeholder="Địa chỉ email" required>
-            </div>
-            <button type="submit" id="submitBtn">Đăng Nhập</button>
-        </form>
-        <div class="toggle" id="toggleForm">Chuyển sang Đăng Ký</div>
-    </div>
+    <div id="text">Tiến</div>
 
     <script>
-        const container = document.getElementById('authContainer');
-        const form = document.getElementById('authForm');
-        const formTitle = document.getElementById('formTitle');
-        const submitBtn = document.getElementById('submitBtn');
-        const toggleFormBtn = document.getElementById('toggleForm');
-        const emailGroup = document.getElementById('emailGroup');
-        
-        let isLoginForm = true;
-
-        toggleFormBtn.addEventListener('click', () => {
-            isLoginForm = !isLoginForm;
-            if (isLoginForm) {
-                formTitle.textContent = 'Đăng Nhập';
-                submitBtn.textContent = 'Đăng Nhập';
-                emailGroup.style.display = 'none';
-                toggleFormBtn.textContent = 'Chuyển sang Đăng Ký';
-            } else {
-                formTitle.textContent = 'Đăng Ký';
-                submitBtn.textContent = 'Đăng Ký';
-                emailGroup.style.display = 'block';
-                toggleFormBtn.textContent = 'Chuyển sang Đăng Nhập';
+        function createElements(count, className, maxSize) {
+            const container = document.body;
+            for (let i = 0; i < count; i++) {
+                const el = document.createElement('div');
+                el.classList.add(className);
+                el.style.width = `${Math.random() * maxSize + 3}px`;
+                el.style.height = el.style.width;
+                el.style.left = `${Math.random() * window.innerWidth}px`;
+                el.style.top = `${Math.random() * window.innerHeight}px`;
+                el.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 50%)`;
+                container.appendChild(el);
+                animateElement(el, className);
             }
-        });
+        }
 
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const email = document.getElementById('email')?.value;
+        function animateElement(el, className) {
+            if (className === 'firework') {
+                el.animate([
+                    { transform: 'scale(0)', opacity: 1 },
+                    { 
+                        transform: 'scale(2)', 
+                        opacity: 0,
+                        translate: `${Math.random() * 200 - 100}px ${Math.random() * 200 - 100}px`
+                    }
+                ], {
+                    duration: 1500,
+                    easing: 'ease-out',
+                    delay: Math.random() * 2000,
+                    iterations: Infinity
+                });
+            }
 
-            alert(isLoginForm 
-                ? `Đăng nhập: ${username}` 
-                : `Đăng ký: ${username}, Email: ${email}`
-            );
-        });
+            if (className === 'sparkle') {
+                el.animate([
+                    { transform: 'scale(0)', opacity: 0 },
+                    { transform: 'scale(1.5)', opacity: 1 },
+                    { transform: 'scale(0)', opacity: 0 }
+                ], {
+                    duration: Math.random() * 2000 + 1000,
+                    iterations: Infinity,
+                    delay: Math.random() * 2000
+                });
+            }
+
+            if (className === 'particle') {
+                el.animate([
+                    { 
+                        transform: 'translateY(0) rotate(0deg)',
+                        opacity: 1
+                    },
+                    { 
+                        transform: `translateY(${window.innerHeight + 100}px) rotate(360deg)`,
+                        opacity: 0
+                    }
+                ], {
+                    duration: Math.random() * 3000 + 2000,
+                    iterations: Infinity
+                });
+            }
+        }
+
+        createElements(100, 'firework', 15);
+        createElements(200, 'sparkle', 7);
+        createElements(150, 'particle', 10);
     </script>
 </body>
 </html>
