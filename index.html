@@ -5,7 +5,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHẦN THƯỞNG🎁bytien</title>
-    <style>body,html{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background-color:black}.container{position:relative;width:100%;height:100vh;display:flex;align-items:center;justify-content:center}#initialVideo{width:100%;height:100%;object-fit:contain;max-width:100vw;max-height:100vh;cursor:pointer}#videoPlayer{position:fixed;top:0;left:0;width:100%;height:100%;background-color:black;display:none}#mainVideo{width:100%;height:100%;object-fit:contain}video::-webkit-media-controls{display:none!important}video::-webkit-media-controls-enclosure{display:none!important}@media (orientation:portrait){#mainVideo{object-fit:contain;max-height:100vh;width:auto}}@media (orientation:landscape){#mainVideo{object-fit:contain;max-width:100vw;height:auto}}</style>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: black;
+        }
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            max-width: 100vw;
+            max-height: 100vh;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -13,34 +38,35 @@
             <source src="https://firebasestorage.googleapis.com/v0/b/nhachay-43b11.appspot.com/o/YouCut_20240628_154055561.mp4?alt=media&token=d807a742-5250-4856-a899-7337dc971307" type="video/mp4">
         </video>
     </div>
-    <div id="videoPlayer">
-        <video id="mainVideo" autoplay playsinline>
-            <source src="http://localhost:3000/files/sample.mp4" type="video/mp4">
-        </video>
-    </div>
+
     <script>
-        (function(){
-            const e=document.getElementById("initialVideo"),
-            t=document.getElementById("videoPlayer"),
-            n=document.getElementById("mainVideo");
-            e.addEventListener("click",()=>{
-                e.style.display="none",
-                t.style.display="block",
-                n.play().then(()=>{
-                    n.muted=!1
-                }).catch(e=>{
-                    console.log("Không thể tự động phát video:",e)
-                })
-            }),
-            n.addEventListener("ended",()=>{
-                n.play()
-            }),
-            document.addEventListener("DOMContentLoaded",()=>{
-                e.play().catch(e=>{
-                    console.log("Video autoplay failed:",e)
-                })
-            })
-        })();
+       
+        document.addEventListener('keydown', function (event) {
+            if (
+                event.key === 'F12' || 
+                (event.ctrlKey && event.shiftKey && event.key === 'I') || 
+                (event.ctrlKey && event.key === 'U')
+            ) {
+                event.preventDefault();
+                promptForPassword();
+            }
+        });
+
+       
+        document.addEventListener('contextmenu', function (event) {
+            event.preventDefault();
+            promptForPassword();
+        });
+
+       
+        function promptForPassword() {
+            const password = prompt("Phát ăn trộm code của cụ TiếnCUBE🐍🥵! Vui lòng nhập mật khẩu:");
+            if (password !== 'Tiencuto') { 
+                alert("Sai mật khẩu🐍🥵! Rồi cu VYYYY.");
+            } else {
+                alert("Mật khẩu chính xác🐍🥵. MÚP NHƯ VYYY");
+            }
+        }
     </script>
 </body>
 </html>
