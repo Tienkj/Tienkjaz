@@ -1,3 +1,4 @@
+//code by cụ tiến donotcopy
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,6 +62,7 @@
             display: none !important;
         }
 
+       
         @media screen and (orientation: portrait) {
             #initialVideo, #mainVideo {
                 width: 100vw;
@@ -69,6 +71,7 @@
             }
         }
 
+       
         @media screen and (orientation: landscape) {
             #initialVideo, #mainVideo {
                 width: 100vw;
@@ -104,12 +107,9 @@
         initialVideo.addEventListener('click', () => {
             initialVideo.style.display = 'none';
             videoPlayer.style.display = 'block';
-
-            // Start video playback with muted initially
-            mainVideo.muted = true; // Mute initially
             mainVideo.play()
                 .then(() => {
-                    mainVideo.muted = false; // Unmute when it's ready to play
+                    mainVideo.muted = false;
                 })
                 .catch((error) => {
                     console.log("Không thể tự động phát video:", error);
@@ -117,13 +117,10 @@
         });
 
         mainVideo.addEventListener('ended', () => {
-            // Restart video when it ends
-            mainVideo.currentTime = 0;
             mainVideo.play();
         });
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Try to auto-play initial video
             initialVideo.play().catch(function(error) {
                 console.log("Video auto chạy lỗi:", error);
             });
