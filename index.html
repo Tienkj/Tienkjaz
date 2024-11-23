@@ -1,4 +1,4 @@
-//code by cụ tiến donnotcopy
+//code by cụ tiến donotcopy
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,23 +13,27 @@
             height: 100%;
             overflow: hidden;
             background-color: black;
+            position: fixed; 
         }
 
         .container {
-            position: relative;
+            position: fixed; 
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 100vh;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
         #initialVideo {
+            position: absolute;
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            max-width: 100vw;
-            max-height: 100vh;
+            object-fit: cover; 
+            max-width: 100%;
+            max-height: 100%;
             cursor: pointer;
         }
 
@@ -44,12 +48,12 @@
         }
 
         #mainVideo {
+            position: absolute;
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover; /* Changed to cover */
         }
 
-       
         video::-webkit-media-controls {
             display: none !important;
         }
@@ -59,27 +63,26 @@
         }
 
        
-        @media (orientation: portrait) {
-            #mainVideo {
-                object-fit: contain;
-                max-height: 100vh;
-                width: auto;
+        @media screen and (orientation: portrait) {
+            #initialVideo, #mainVideo {
+                width: 100vw;
+                height: 100vh;
+                object-fit: cover;
             }
         }
 
-        
-        @media (orientation: landscape) {
-            #mainVideo {
-                object-fit: contain;
-                max-width: 100vw;
-                height: auto;
+       
+        @media screen and (orientation: landscape) {
+            #initialVideo, #mainVideo {
+                width: 100vw;
+                height: 100vh;
+                object-fit: cover;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Video ban đầu -->
         <video id="initialVideo" autoplay muted loop playsinline>
             <source src="https://firebasestorage.googleapis.com/v0/b/nhachay-43b11.appspot.com/o/YouCut_20240628_154055561.mp4?alt=media&token=d807a742-5250-4856-a899-7337dc971307" type="video/mp4">
         </video>
@@ -96,12 +99,17 @@
         const videoPlayer = document.getElementById('videoPlayer');
         const mainVideo = document.getElementById('mainVideo');
 
+        // Prevent scrolling on mobile
+        document.body.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+        }, { passive: false });
+
         initialVideo.addEventListener('click', () => {
             initialVideo.style.display = 'none';
             videoPlayer.style.display = 'block';
             mainVideo.play()
                 .then(() => {
-                    mainVideo.muted = false; 
+                    mainVideo.muted = false;
                 })
                 .catch((error) => {
                     console.log("Không thể tự động phát video:", error);
@@ -109,42 +117,41 @@
         });
 
         mainVideo.addEventListener('ended', () => {
-            mainVideo.play(); 
+            mainVideo.play();
         });
 
         document.addEventListener('DOMContentLoaded', () => {
             initialVideo.play().catch(function(error) {
-                console.log("Vieo auto chạy lỗi:", error);
+                console.log("Video auto chạy lỗi:", error);
             });
         });
 
-        // Bảo vệ code
+        // Bảo vệ code ngăn chặn mở dev tool và nhấn chuột phải cấm cho vy ngu copy code
         document.addEventListener('keydown', function (event) {
             if (
                 event.key === 'F12' || 
                 (event.ctrlKey && event.shiftKey && event.key === 'I') || 
                 (event.ctrlKey && event.key === 'U')
             ) {
-                event.preventDefault(); 
+                event.preventDefault();
                 promptForPassword();
             }
         });
 
         document.addEventListener('contextmenu', function (event) {
-            event.preventDefault(); 
+            event.preventDefault();
             promptForPassword();
         });
 
         function promptForPassword() {
             const password = prompt("Phát ăn trộm code của cụ TiếnCUBE🐍🥵! Vui lòng nhập mật khẩu:");
-            if (password !== 'Tiencuto') { 
+            if (password !== 'Tiencuto') {
                 alert("Sai mật khẩu🐍🥵! Rồi cu VYYYY.");
             } else {
                 alert("Mật khẩu chính xác🐍🥵. MÚP NHƯ VYYY");
             }
         }
 
-        
         document.addEventListener('keyup', function (event) {
             if (event.ctrlKey && event.key === 'u') {
                 event.preventDefault();
