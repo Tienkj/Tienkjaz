@@ -1,32 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat với AI</title>
+    <title>Chuyển trang tự động</title>
+    <script type="text/javascript">
+        window.onload = function() {
+            window.location.href = 'https://silent-polygon-420615.web.app/'; 
+        };
+    </script>
 </head>
 <body>
-    <h1>Chat với AI Tiencube</h1>
-   
-    <iframe id="myIframe" src="https://silent-polygon-420615.web.app/" width="100%" height="500px" style="border:none;" onload="iframeLoaded()"></iframe>
-
-    <script>
-        function iframeLoaded() {
-            console.log('Iframe đã được tải xong!');
-           
-            
-           
-            const iframe = document.getElementById('myIframe');
-            try {
-                const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-                if (iframeDocument) {
-                    console.log('Nội dung iframe có thể truy cập được.');
-                  
-                }
-            } catch (e) {
-                console.error('Không thể truy cập nội dung trong iframe (CORS issue hoặc iframe từ domain khác).');
-            }
-        }
-    </script>
+    <p>Đang chuyển hướng...</p>
 </body>
 </html>
