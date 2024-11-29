@@ -7,7 +7,26 @@
 </head>
 <body>
     <h1>Chat với AI Tiencube</h1>
-    <!-- Nhúng trang web khác -->
-    <iframe src="https://silent-polygon-420615.web.app/" width="100%" height="500px" style="border:none;"></iframe>
+   
+    <iframe id="myIframe" src="https://silent-polygon-420615.web.app/" width="100%" height="500px" style="border:none;" onload="iframeLoaded()"></iframe>
+
+    <script>
+        function iframeLoaded() {
+            console.log('Iframe đã được tải xong!');
+           
+            
+           
+            const iframe = document.getElementById('myIframe');
+            try {
+                const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+                if (iframeDocument) {
+                    console.log('Nội dung iframe có thể truy cập được.');
+                  
+                }
+            } catch (e) {
+                console.error('Không thể truy cập nội dung trong iframe (CORS issue hoặc iframe từ domain khác).');
+            }
+        }
+    </script>
 </body>
 </html>
