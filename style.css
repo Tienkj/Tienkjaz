@@ -1,0 +1,7 @@
+div {
+    display: flex;
+    align-items: center;
+}
+label {
+    width: 100px;
+}
