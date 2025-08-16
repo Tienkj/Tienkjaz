@@ -7,10 +7,10 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      - name: Tải & cấu hình ngrok
+      - name: Tải & cấu hình ngrok v3
         run: |
-          Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
-          Expand-Archive ngrok.zip
+          Invoke-WebRequest https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-windows-amd64.zip -OutFile ngrok.zip
+          Expand-Archive ngrok.zip -DestinationPath ngrok
           .\ngrok\ngrok.exe config add-authtoken 29eh4vE8GamGOGE6YtQMlvLlZ4F_5LZpkhESEDUB7ZerGNCek
 
       - name: Tạo tài khoản RDP
@@ -26,7 +26,7 @@ jobs:
 
       - name: Chạy ngrok TCP tunnel (background)
         run: |
-          Start-Job { .\ngrok\ngrok.exe tcp 3389 }
+          Start-Process .\ngrok\ngrok.exe "tcp 3389" -WindowStyle Hidden
 
       - name: Đợi ngrok khởi động
         run: Start-Sleep -Seconds 10
@@ -34,7 +34,7 @@ jobs:
       - name: Lấy địa chỉ RDP từ ngrok
         run: |
           $tunnel = Invoke-RestMethod -Uri "http://127.0.0.1:4040/api/tunnels"
-          $addr = $tunnel.tunnels.public_url -replace "tcp://",""
+          $addr = $tunnel.tunnels[0].public_url -replace "tcp://",""
           echo "✅ VPS đã sẵn sàng!"
           echo "🌐 Kết nối RDP: $addr"
           echo "👤 User: tien123"
