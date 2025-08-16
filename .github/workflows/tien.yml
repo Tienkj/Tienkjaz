@@ -15,7 +15,7 @@ jobs:
 
       - name: Tạo tài khoản RDP
         run: |
-          net user tien123 123456 /add
+          net user tien123 Tien@12345 /add
           net localgroup administrators tien123 /add
 
       - name: Mở RDP port & bật dịch vụ
@@ -38,7 +38,9 @@ jobs:
           echo "✅ VPS đã sẵn sàng!"
           echo "🌐 Kết nối RDP: $addr"
           echo "👤 User: tien123"
-          echo "🔑 Pass: 123456"
+          echo "🔑 Pass: Tien@12345"
+          echo ""
+          echo "👉 Mở Remote Desktop (mstsc) trên máy và nhập địa chỉ ở trên để kết nối."
 
       - name: Giữ VPS online 6h
         run: Start-Sleep -Seconds 21600
